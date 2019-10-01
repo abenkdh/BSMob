@@ -1,0 +1,2 @@
+include ':app', ':bsmob'
+rootProject.name='BSMob Sample'
