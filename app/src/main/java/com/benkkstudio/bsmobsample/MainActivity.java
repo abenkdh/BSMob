@@ -2,15 +2,11 @@ package com.benkkstudio.bsmobsample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.benkkstudio.bsmob.BSMob;
+import com.benkkstudio.bsmob.BSMobBanner;
+import com.benkkstudio.bsmob.BSMobInterstitial;
 import com.benkkstudio.bsmob.Interface.BSMobBannerListener;
 import com.benkkstudio.bsmob.Interface.BSMobInterstitialListener;
 import com.google.android.gms.ads.AdRequest;
@@ -22,9 +18,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final BSMob bsMob = new BSMob.AdmobInterstitial(this)
+        final BSMobInterstitial bsMobInterstitial = new BSMobInterstitial.with(this)
                 .setAdRequest(new AdRequest.Builder().build())
-                .setIntersttitialId("ca-app-pub-3940256099942544/1033173712")
+                .setId("ca-app-pub-3940256099942544/1033173712")
                 .repeatRequest(false)
                 .setListener(new BSMobInterstitialListener() {
                     @Override
@@ -35,7 +31,25 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .build();
-        bsMob.load();
+        bsMobInterstitial.load();
 
+        LinearLayout linearLayout = findViewById(R.id.ll_ads);
+        new BSMobBanner.with(this)
+                .setAdRequest(new AdRequest.Builder().build())
+                .setId("ca-app-pub-3940256099942544/1033173711")
+                .setLayout(linearLayout)
+                .setSize(AdSize.BANNER)
+                .setListener(new BSMobBannerListener() {
+                    @Override
+                    public void onAdFailedToLoad(int error) {
+
+                    }
+
+                    @Override
+                    public void onAdLoaded() {
+
+                    }
+                })
+                .show();
     }
 }
