@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import com.benkkstudio.bsmob.BSMobBanner;
 import com.benkkstudio.bsmob.BSMobInterstitial;
 import com.benkkstudio.bsmob.Interface.BSMobBannerListener;
-import com.benkkstudio.bsmob.Interface.BSMobInterstitialListener;
+import com.benkkstudio.bsmob.Interface.BSMobOnLoaded;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.InterstitialAd;
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAdRequest(new AdRequest.Builder().build())
                 .setId("ca-app-pub-3940256099942544/1033173712")
                 .repeatRequest(false)
-                .setListener(new BSMobInterstitialListener() {
+                .setListener(new BSMobOnLoaded() {
                     @Override
                     public void onAdLoaded(InterstitialAd interstitialAd) {
                         if(interstitialAd.isLoaded()){

@@ -4,20 +4,22 @@ import android.app.Activity;
 
 import androidx.annotation.NonNull;
 
-import com.benkkstudio.bsmob.Interface.BSMobInterstitialListener;
+import com.benkkstudio.bsmob.Interface.BSMobOnClosed;
+import com.benkkstudio.bsmob.Interface.BSMobOnLoaded;
 import com.google.android.gms.ads.AdRequest;
 
 public class BSMobInterstitial extends AbstractInterstitial {
 
-    private BSMobInterstitial(Activity activity, String interstitialId, BSMobInterstitialListener BSMobInterstitialListener, AdRequest adRequest, Boolean repeat) {
-        super(activity, interstitialId, BSMobInterstitialListener, adRequest, repeat);
+    private BSMobInterstitial(Activity activity, String interstitialId, BSMobOnLoaded BSMobOnLoaded, BSMobOnClosed BSMobOnClosed, AdRequest adRequest, Boolean repeat) {
+        super(activity, interstitialId, BSMobOnLoaded, BSMobOnClosed, adRequest, repeat);
     }
 
 
     public static class with {
         private Activity activity;
         private String interstitialId;
-        private BSMobInterstitialListener BSMobInterstitialListener;
+        private BSMobOnLoaded BSMobOnLoaded;
+        private BSMobOnClosed BSMobOnClosed;
         private AdRequest adRequest;
         private Boolean repeat;
 
@@ -32,8 +34,14 @@ public class BSMobInterstitial extends AbstractInterstitial {
         }
 
         @NonNull
-        public with setListener(@NonNull BSMobInterstitialListener BSMobInterstitialListener) {
-            this.BSMobInterstitialListener = BSMobInterstitialListener;
+        public with onLoaded(@NonNull BSMobOnLoaded BSMobOnLoaded) {
+            this.BSMobOnLoaded = BSMobOnLoaded;
+            return this;
+        }
+
+        @NonNull
+        public with onClosed(@NonNull BSMobOnClosed BSMobOnClosed) {
+            this.BSMobOnClosed = BSMobOnClosed;
             return this;
         }
 
@@ -50,7 +58,7 @@ public class BSMobInterstitial extends AbstractInterstitial {
         }
         @NonNull
         public BSMobInterstitial build() {
-            return new BSMobInterstitial(activity, interstitialId, BSMobInterstitialListener, adRequest, repeat);
+            return new BSMobInterstitial(activity, interstitialId, BSMobOnLoaded, BSMobOnClosed, adRequest, repeat);
         }
     }
 
