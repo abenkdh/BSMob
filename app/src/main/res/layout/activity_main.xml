@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="BENKK"/>
+
     <LinearLayout
         android:layout_alignParentBottom="true"
         android:id="@+id/ll_ads"

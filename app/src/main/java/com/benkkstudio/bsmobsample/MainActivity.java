@@ -50,21 +50,23 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .show();
 
-        LinearLayout linearLayout = findViewById(R.id.ll_ads);
+        final LinearLayout linearLayout = findViewById(R.id.ll_ads);
         new BSMob.banner(this)
                 .setAdRequest(new AdRequest.Builder().build())
-                .setId("ca-app-pub-3940256099942544/1033173711")
+                .setId("ca-app-pub-3940256099942544/6300978111")
                 .setLayout(linearLayout)
                 .setSize(AdSize.BANNER)
                 .setListener(new BannerListener() {
                     @Override
                     public void onAdFailedToLoad(int error) {
-
+                        linearLayout.setVisibility(View.GONE);
+                        Log.d("ABENK : BANNER ", "FAILED");
                     }
 
                     @Override
                     public void onAdLoaded() {
-
+                        linearLayout.setVisibility(View.VISIBLE);
+                        Log.d("ABENK : BANNER ", "LOADED");
                     }
                 })
                 .show();
