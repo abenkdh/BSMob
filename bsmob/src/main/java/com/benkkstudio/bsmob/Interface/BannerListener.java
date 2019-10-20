@@ -1,6 +1,6 @@
 package com.benkkstudio.bsmob.Interface;
 
-public interface BSMobBannerListener {
+public interface BannerListener {
     void onAdFailedToLoad(int error);
     void onAdLoaded();
 }
