@@ -8,11 +8,16 @@ import androidx.annotation.NonNull;
 
 import com.benkkstudio.bsmob.Interface.BannerListener;
 import com.benkkstudio.bsmob.Interface.InterstitialListener;
+import com.benkkstudio.bsmob.Interface.RewardListener;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 public class BSMob {
     private Activity activity;
@@ -25,8 +30,11 @@ public class BSMob {
     private AdSize adSize;
     private LinearLayout linearLayout;
 
-    private InterstitialAd interstitialAd;
+    private String rewardId;
+    private RewardListener rewardListener;
 
+    private InterstitialAd interstitialAd;
+    private RewardedVideoAd rewardedVideoAd;
     private BSMob(Activity activity,
                   String interstitialId,
                   InterstitialListener InterstitialListener,
@@ -35,7 +43,7 @@ public class BSMob {
         this.interstitialId = interstitialId;
         this.InterstitialListener = InterstitialListener;
         this.adRequest = adRequest;
-        loadIntersitial();
+        loadInterstitialInline();
     }
 
     private BSMob(Activity activity,
@@ -50,10 +58,21 @@ public class BSMob {
         this.bannerListener = bannerListener;
         this.adSize = adSize;
         this.linearLayout = linearLayout;
-        loadBanner();
+        loadBannerInline();
     }
 
-    private void loadBanner(){
+    private BSMob(Activity activity,
+                  AdRequest adRequest,
+                  String rewardId,
+                  RewardListener rewardListener) {
+        this.activity = activity;
+        this.adRequest = adRequest;
+        this.rewardId = rewardId;
+        this.rewardListener = rewardListener;
+        loadRewardInline();
+    }
+
+    private void loadBannerInline(){
         AdView adView = new AdView(activity);
         adView.setAdUnitId(bannerID);
         adView.setAdSize(adSize);
@@ -74,8 +93,53 @@ public class BSMob {
         });
     }
 
+    private void loadRewardInline(){
+        rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(activity);
+        rewardedVideoAd.loadAd(rewardId, adRequest);
+        rewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+            @Override
+            public void onRewardedVideoAdLoaded() {
+                rewardListener.onRewardedVideoAdLoaded();
+            }
 
-    private void loadIntersitial(){
+            @Override
+            public void onRewardedVideoAdOpened() {
+
+            }
+
+            @Override
+            public void onRewardedVideoStarted() {
+
+            }
+
+            @Override
+            public void onRewardedVideoAdClosed() {
+                rewardListener.onRewardedVideoAdClosed();
+            }
+
+            @Override
+            public void onRewarded(RewardItem rewardItem) {
+
+            }
+
+            @Override
+            public void onRewardedVideoAdLeftApplication() {
+
+            }
+
+            @Override
+            public void onRewardedVideoAdFailedToLoad(int i) {
+                rewardListener.onRewardedVideoAdFailedToLoad(i);
+            }
+
+            @Override
+            public void onRewardedVideoCompleted() {
+                rewardListener.onRewardedVideoCompleted();
+            }
+        });
+    }
+
+    private void loadInterstitialInline(){
         interstitialAd = new InterstitialAd(activity);
         interstitialAd.setAdUnitId(interstitialId);
         interstitialAd.loadAd(adRequest);
@@ -103,6 +167,14 @@ public class BSMob {
 
     public void showInterstitial(){
         interstitialAd.show();
+    }
+
+    public void loadReward(){
+        rewardedVideoAd.loadAd(rewardId, adRequest);
+    }
+
+    public void showReward(){
+        rewardedVideoAd.show();
     }
 
     public static class interstitial {
@@ -187,6 +259,41 @@ public class BSMob {
         @NonNull
         public BSMob show() {
             return new BSMob(activity, adRequest, bannerID, bannerListener, adSize, linearLayout);
+        }
+    }
+
+    public static class reward {
+        private Activity activity;
+        private String rewardId;
+        private RewardListener rewardListener;
+        private AdRequest adRequest;
+
+        public reward(@NonNull Activity activity) {
+            this.activity = activity;
+        }
+
+        @NonNull
+        public reward setId(@NonNull String rewardId) {
+            this.rewardId = rewardId;
+            return this;
+        }
+
+        @NonNull
+        public reward setListener(@NonNull RewardListener rewardListener) {
+            this.rewardListener = rewardListener;
+            return this;
+        }
+
+        @NonNull
+        public reward setAdRequest(@NonNull AdRequest adRequest) {
+            this.adRequest = adRequest;
+            return this;
+        }
+
+
+        @NonNull
+        public BSMob show() {
+            return new BSMob(activity, adRequest, rewardId, rewardListener);
         }
     }
 }

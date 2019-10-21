@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.benkkstudio.bsmob.BSMob;
 import com.benkkstudio.bsmob.Interface.BannerListener;
 import com.benkkstudio.bsmob.Interface.InterstitialListener;
+import com.benkkstudio.bsmob.Interface.RewardListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.InterstitialAd;
@@ -25,30 +26,55 @@ public class MainActivity extends AppCompatActivity {
         btn_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bsMob.showInterstitial();
+                bsMob.showReward();
             }
         });
-
-        bsMob = new BSMob.interstitial(this)
+        bsMob = new BSMob.reward(this)
+                .setId("ca-app-pub-3940256099942544/5224354917")
                 .setAdRequest(new AdRequest.Builder().build())
-                .setId("ca-app-pub-3940256099942544/1033173712")
-                .setListener(new InterstitialListener() {
+                .setListener(new RewardListener() {
                     @Override
-                    public void onAdLoaded(InterstitialAd interstitialAd) {
-                        Log.d("ABENK :", "LOADED");
+                    public void onRewardedVideoAdLoaded() {
                     }
 
                     @Override
-                    public void onAdFailed(InterstitialAd interstitialAd) {
-                        Log.d("ABENK :", "FAILED");
+                    public void onRewardedVideoAdClosed() {
+                        Log.d("ABENK : ", "CLOSED");
+                        bsMob.loadReward();
                     }
 
                     @Override
-                    public void onAdClosed(InterstitialAd interstitialAd) {
-                        bsMob.loadInterstitial();
+                    public void onRewardedVideoAdFailedToLoad(int error) {
+                        Log.d("ABENK : ", "FAILED");
+                        bsMob.loadReward();
+                    }
+
+                    @Override
+                    public void onRewardedVideoCompleted() {
+                        Log.d("ABENK : ", "COMPLETE");
                     }
                 })
                 .show();
+//        bsMob = new BSMob.interstitial(this)
+//                .setAdRequest(new AdRequest.Builder().build())
+//                .setId("ca-app-pub-3940256099942544/1033173712")
+//                .setListener(new InterstitialListener() {
+//                    @Override
+//                    public void onAdLoaded(InterstitialAd interstitialAd) {
+//                        Log.d("ABENK :", "LOADED");
+//                    }
+//
+//                    @Override
+//                    public void onAdFailed(InterstitialAd interstitialAd) {
+//                        Log.d("ABENK :", "FAILED");
+//                    }
+//
+//                    @Override
+//                    public void onAdClosed(InterstitialAd interstitialAd) {
+//                        bsMob.loadInterstitial();
+//                    }
+//                })
+//                .show();
 
         final LinearLayout linearLayout = findViewById(R.id.ll_ads);
         new BSMob.banner(this)

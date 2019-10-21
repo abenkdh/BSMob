@@ -151,5 +151,8 @@
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-ads-base:18.2.0@aar" level="project" />
     <orderEntry type="module" module-name="bsmob" />
     <orderEntry type="module" module-name="bsmob" />
+    <orderEntry type="module" module-name="bsmob" />
+    <orderEntry type="module" module-name="bsmob" />
+    <orderEntry type="module" module-name="bsmob" />
   </component>
 </module>
