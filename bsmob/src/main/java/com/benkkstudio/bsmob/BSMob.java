@@ -256,6 +256,7 @@ public class BSMob {
             return this;
         }
 
+
         @NonNull
         public BSMob show() {
             return new BSMob(activity, adRequest, bannerID, bannerListener, adSize, linearLayout);
