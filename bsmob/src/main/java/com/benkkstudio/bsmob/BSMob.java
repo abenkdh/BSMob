@@ -1,8 +1,11 @@
 package com.benkkstudio.bsmob;
 
 import android.app.Activity;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 
@@ -20,9 +23,13 @@ import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 public class BSMob {
+    public static final String DUMMY_BANNER = "ca-app-pub-3940256099942544/6300978111";
+    public static final String DUMMY_INTERSTITIAL = "ca-app-pub-3940256099942544/1033173712";
+    public static final String DUMMY_REWARD = "ca-app-pub-3940256099942544/6300978111";
+
     private Activity activity;
     private String interstitialId;
-    private InterstitialListener InterstitialListener;
+    private InterstitialListener interstitialListener;
     private AdRequest adRequest;
 
     private String bannerID;
@@ -41,7 +48,7 @@ public class BSMob {
                   AdRequest adRequest) {
         this.activity = activity;
         this.interstitialId = interstitialId;
-        this.InterstitialListener = InterstitialListener;
+        this.interstitialListener = InterstitialListener;
         this.adRequest = adRequest;
         loadInterstitialInline();
     }
@@ -146,17 +153,17 @@ public class BSMob {
         interstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
-                InterstitialListener.onAdClosed(interstitialAd);
+                interstitialListener.onAdClosed(interstitialAd);
             }
 
             @Override
             public void onAdLoaded() {
-                InterstitialListener.onAdLoaded(interstitialAd);
+                interstitialListener.onAdLoaded(interstitialAd);
             }
 
             @Override
             public void onAdFailedToLoad(int i) {
-                InterstitialListener.onAdFailed(interstitialAd);
+                interstitialListener.onAdFailed(interstitialAd);
             }
         });
     }
@@ -169,6 +176,10 @@ public class BSMob {
         interstitialAd.show();
     }
 
+    public void setInterstitialListener(InterstitialListener interstitialListener){
+       this.interstitialListener = interstitialListener;
+    }
+
     public void loadReward(){
         rewardedVideoAd.loadAd(rewardId, adRequest);
     }
@@ -177,13 +188,26 @@ public class BSMob {
         rewardedVideoAd.show();
     }
 
+    public void setRewardListener(RewardListener rewardListener){
+        this.rewardListener = rewardListener;
+    }
+
+    public AdSize adaptiveSize() {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        float widthPixels = outMetrics.widthPixels;
+        float density = outMetrics.density;
+        int adWidth = (int) (widthPixels / density);
+        return AdSize.getCurrentOrientationBannerAdSizeWithWidth(activity, adWidth);
+    }
+
     public static class interstitial {
         private Activity activity;
         private String interstitialId;
         private InterstitialListener InterstitialListener;
         private AdRequest adRequest;
         private InterstitialAd interstitialAd;
-
         public interstitial(@NonNull Activity activity) {
             this.activity = activity;
         }
@@ -199,8 +223,6 @@ public class BSMob {
             this.InterstitialListener = InterstitialListener;
             return this;
         }
-
-
 
         @NonNull
         public interstitial setAdRequest(@NonNull AdRequest adRequest) {
@@ -221,7 +243,6 @@ public class BSMob {
         private AdSize adSize;
         private LinearLayout linearLayout;
         private AdRequest adRequest;
-
         public banner(@NonNull Activity activity) {
             this.activity = activity;
         }
@@ -255,7 +276,6 @@ public class BSMob {
             this.linearLayout = linearLayout;
             return this;
         }
-
 
         @NonNull
         public BSMob show() {
