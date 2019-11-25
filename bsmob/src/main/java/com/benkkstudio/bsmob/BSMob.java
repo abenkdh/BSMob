@@ -192,7 +192,7 @@ public class BSMob {
         this.rewardListener = rewardListener;
     }
 
-    public AdSize adaptiveSize() {
+    public static AdSize adaptiveSize(Activity activity) {
         Display display = activity.getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
