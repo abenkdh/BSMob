@@ -40,7 +40,7 @@ public class BSMob {
     private String rewardId;
     private RewardListener rewardListener;
 
-    private InterstitialAd interstitialAd;
+    private static InterstitialAd interstitialAd;
     private RewardedVideoAd rewardedVideoAd;
     private BSMob(Activity activity,
                   String interstitialId,
@@ -168,12 +168,16 @@ public class BSMob {
         });
     }
 
-    public void loadInterstitial(){
+    public static void loadInterstitial(AdRequest adRequest){
         interstitialAd.loadAd(adRequest);
     }
 
-    public void showInterstitial(){
+    public static void showInterstitial(){
         interstitialAd.show();
+    }
+
+    public static InterstitialAd getInterstitial(){
+        return interstitialAd;
     }
 
     public void setInterstitialListener(InterstitialListener interstitialListener){

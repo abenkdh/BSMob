@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         btn_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bsMob.showReward();
+                BSMob.getInterstitial().show();
             }
         });
 
@@ -73,33 +73,33 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .show();
-//        bsMob = new BSMob.interstitial(this)
-//                .setAdRequest(new AdRequest.Builder().build())
-//                .setId("ca-app-pub-3940256099942544/1033173712")
-//                .setListener(new InterstitialListener() {
-//                    @Override
-//                    public void onAdLoaded(InterstitialAd interstitialAd) {
-//                        Log.d("ABENK :", "LOADED");
-//                    }
-//
-//                    @Override
-//                    public void onAdFailed(InterstitialAd interstitialAd) {
-//                        Log.d("ABENK :", "FAILED");
-//                    }
-//
-//                    @Override
-//                    public void onAdClosed(InterstitialAd interstitialAd) {
-//                        bsMob.loadInterstitial();
-//                    }
-//                })
-//                .show();
+        bsMob = new BSMob.interstitial(this)
+                .setAdRequest(new AdRequest.Builder().build())
+                .setId("ca-app-pub-3940256099942544/1033173712")
+                .setListener(new InterstitialListener() {
+                    @Override
+                    public void onAdLoaded(InterstitialAd interstitialAd) {
+                        Log.d("ABENK :", "LOADED");
+                    }
+
+                    @Override
+                    public void onAdFailed(InterstitialAd interstitialAd) {
+                        Log.d("ABENK :", "FAILED");
+                    }
+
+                    @Override
+                    public void onAdClosed(InterstitialAd interstitialAd) {
+                        interstitialAd.loadAd(new AdRequest.Builder().build());
+                    }
+                })
+                .show();
 
         final LinearLayout linearLayout = findViewById(R.id.ll_ads);
         new BSMob.banner(this)
                 .setAdRequest(bsMobConsent.getAdRequest())
                 .setId("ca-app-pub-3940256099942544/6300978111")
                 .setLayout(linearLayout)
-                .setSize(bsMob.adaptiveSize())
+                .setSize(BSMob.adaptiveSize(this))
                 .setListener(new BannerListener() {
                     @Override
                     public void onAdFailedToLoad(int error) {
