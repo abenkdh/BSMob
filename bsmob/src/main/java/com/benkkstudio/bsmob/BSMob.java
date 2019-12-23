@@ -84,7 +84,6 @@ public class BSMob {
         adView.setAdUnitId(bannerID);
         adView.setAdSize(adSize);
         adView.loadAd(adRequest);
-        linearLayout.setVisibility(View.GONE);
         linearLayout.addView(adView);
         adView.setAdListener(new AdListener() {
             @Override
