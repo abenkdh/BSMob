@@ -6,4 +6,5 @@ public interface RewardListener {
     void onRewardedVideoAdLoaded(RewardedVideoAd rewardedVideoAd);
     void onRewardedVideoAdClosed(RewardedVideoAd rewardedVideoAd);
     void onRewardedVideoAdFailedToLoad(int error, RewardedVideoAd rewardedVideoAd);
+    void onRewardedVideoCompleted();
 }

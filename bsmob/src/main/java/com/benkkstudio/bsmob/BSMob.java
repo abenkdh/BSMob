@@ -140,6 +140,7 @@ public class BSMob {
 
             @Override
             public void onRewardedVideoCompleted() {
+                rewardListener.onRewardedVideoCompleted();
             }
         });
     }
