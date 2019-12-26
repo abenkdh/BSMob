@@ -41,7 +41,7 @@ public class BSMob {
     private RewardListener rewardListener;
 
     private static InterstitialAd interstitialAd;
-    private RewardedVideoAd rewardedVideoAd;
+    private static RewardedVideoAd rewardedVideoAd;
     private BSMob(Activity activity,
                   String interstitialId,
                   InterstitialListener InterstitialListener,
@@ -105,7 +105,7 @@ public class BSMob {
         rewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
             @Override
             public void onRewardedVideoAdLoaded() {
-                rewardListener.onRewardedVideoAdLoaded();
+                rewardListener.onRewardedVideoAdLoaded(rewardedVideoAd);
             }
 
             @Override
@@ -120,7 +120,7 @@ public class BSMob {
 
             @Override
             public void onRewardedVideoAdClosed() {
-                rewardListener.onRewardedVideoAdClosed();
+                rewardListener.onRewardedVideoAdClosed(rewardedVideoAd);
             }
 
             @Override
@@ -135,12 +135,11 @@ public class BSMob {
 
             @Override
             public void onRewardedVideoAdFailedToLoad(int i) {
-                rewardListener.onRewardedVideoAdFailedToLoad(i);
+                rewardListener.onRewardedVideoAdFailedToLoad(i, rewardedVideoAd);
             }
 
             @Override
             public void onRewardedVideoCompleted() {
-                rewardListener.onRewardedVideoCompleted();
             }
         });
     }
@@ -167,32 +166,12 @@ public class BSMob {
         });
     }
 
-    public static void loadInterstitial(AdRequest adRequest){
-        interstitialAd.loadAd(adRequest);
-    }
-
-    public static void showInterstitial(){
-        interstitialAd.show();
-    }
-
     public static InterstitialAd getInterstitial(){
         return interstitialAd;
     }
 
-    public void setInterstitialListener(InterstitialListener interstitialListener){
-       this.interstitialListener = interstitialListener;
-    }
-
-    public void loadReward(){
-        rewardedVideoAd.loadAd(rewardId, adRequest);
-    }
-
-    public void showReward(){
-        rewardedVideoAd.show();
-    }
-
-    public void setRewardListener(RewardListener rewardListener){
-        this.rewardListener = rewardListener;
+    public static RewardedVideoAd getReward(){
+        return rewardedVideoAd;
     }
 
     public static AdSize adaptiveSize(Activity activity) {
