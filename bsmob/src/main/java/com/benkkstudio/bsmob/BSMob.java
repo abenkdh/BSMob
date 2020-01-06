@@ -1,6 +1,7 @@
 package com.benkkstudio.bsmob;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -27,7 +28,7 @@ public class BSMob {
     public static final String DUMMY_INTERSTITIAL = "ca-app-pub-3940256099942544/1033173712";
     public static final String DUMMY_REWARD = "ca-app-pub-3940256099942544/6300978111";
 
-    private Activity activity;
+    private Context context;
     private String interstitialId;
     private InterstitialListener interstitialListener;
     private AdRequest adRequest;
@@ -42,24 +43,24 @@ public class BSMob {
 
     private static InterstitialAd interstitialAd;
     private static RewardedVideoAd rewardedVideoAd;
-    private BSMob(Activity activity,
+    private BSMob(Context context,
                   String interstitialId,
                   InterstitialListener InterstitialListener,
                   AdRequest adRequest) {
-        this.activity = activity;
+        this.context = context;
         this.interstitialId = interstitialId;
         this.interstitialListener = InterstitialListener;
         this.adRequest = adRequest;
         loadInterstitialInline();
     }
 
-    private BSMob(Activity activity,
+    private BSMob(Context context,
                   AdRequest adRequest,
                   String bannerID,
                   BannerListener bannerListener,
                   AdSize adSize,
                   LinearLayout linearLayout) {
-        this.activity = activity;
+        this.context = context;
         this.adRequest = adRequest;
         this.bannerID = bannerID;
         this.bannerListener = bannerListener;
@@ -68,11 +69,11 @@ public class BSMob {
         loadBannerInline();
     }
 
-    private BSMob(Activity activity,
+    private BSMob(Context context,
                   AdRequest adRequest,
                   String rewardId,
                   RewardListener rewardListener) {
-        this.activity = activity;
+        this.context = context;
         this.adRequest = adRequest;
         this.rewardId = rewardId;
         this.rewardListener = rewardListener;
@@ -80,7 +81,7 @@ public class BSMob {
     }
 
     private void loadBannerInline(){
-        AdView adView = new AdView(activity);
+        AdView adView = new AdView(context);
         adView.setAdUnitId(bannerID);
         adView.setAdSize(adSize);
         adView.loadAd(adRequest);
@@ -100,7 +101,7 @@ public class BSMob {
     }
 
     private void loadRewardInline(){
-        rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(activity);
+        rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
         rewardedVideoAd.loadAd(rewardId, adRequest);
         rewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
             @Override
@@ -146,7 +147,7 @@ public class BSMob {
     }
 
     private void loadInterstitialInline(){
-        interstitialAd = new InterstitialAd(activity);
+        interstitialAd = new InterstitialAd(context);
         interstitialAd.setAdUnitId(interstitialId);
         interstitialAd.loadAd(adRequest);
         interstitialAd.setAdListener(new AdListener() {
@@ -175,24 +176,24 @@ public class BSMob {
         return rewardedVideoAd;
     }
 
-    public static AdSize adaptiveSize(Activity activity) {
+    public static AdSize adaptiveSize(Activity activity, int min) {
         Display display = activity.getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
         float widthPixels = outMetrics.widthPixels;
         float density = outMetrics.density;
         int adWidth = (int) (widthPixels / density);
-        return AdSize.getCurrentOrientationBannerAdSizeWithWidth(activity, adWidth);
+        return AdSize.getCurrentOrientationBannerAdSizeWithWidth(activity, adWidth - min);
     }
 
     public static class interstitial {
-        private Activity activity;
+        private Context context;
         private String interstitialId;
         private InterstitialListener InterstitialListener;
         private AdRequest adRequest;
         private InterstitialAd interstitialAd;
-        public interstitial(@NonNull Activity activity) {
-            this.activity = activity;
+        public interstitial(@NonNull Context context) {
+            this.context = context;
         }
 
         @NonNull
@@ -215,19 +216,19 @@ public class BSMob {
 
         @NonNull
         public BSMob show() {
-            return new BSMob(activity, interstitialId, InterstitialListener, adRequest);
+            return new BSMob(context, interstitialId, InterstitialListener, adRequest);
         }
     }
 
     public static class banner {
-        private Activity activity;
+        private Context context;
         private String bannerID;
         private BannerListener bannerListener;
         private AdSize adSize;
         private LinearLayout linearLayout;
         private AdRequest adRequest;
-        public banner(@NonNull Activity activity) {
-            this.activity = activity;
+        public banner(@NonNull Context context) {
+            this.context = context;
         }
 
         @NonNull
@@ -262,18 +263,18 @@ public class BSMob {
 
         @NonNull
         public BSMob show() {
-            return new BSMob(activity, adRequest, bannerID, bannerListener, adSize, linearLayout);
+            return new BSMob(context, adRequest, bannerID, bannerListener, adSize, linearLayout);
         }
     }
 
     public static class reward {
-        private Activity activity;
+        private Context context;
         private String rewardId;
         private RewardListener rewardListener;
         private AdRequest adRequest;
 
-        public reward(@NonNull Activity activity) {
-            this.activity = activity;
+        public reward(@NonNull Context context) {
+            this.context = context;
         }
 
         @NonNull
@@ -297,7 +298,7 @@ public class BSMob {
 
         @NonNull
         public BSMob show() {
-            return new BSMob(activity, adRequest, rewardId, rewardListener);
+            return new BSMob(context, adRequest, rewardId, rewardListener);
         }
     }
 }

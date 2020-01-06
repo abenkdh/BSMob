@@ -47,32 +47,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        bsMob = new BSMob.reward(this)
-                .setId("ca-app-pub-3940256099942544/5224354917")
-                .setAdRequest(bsMobConsent.getAdRequest())
-                .setListener(new RewardListener() {
-                    @Override
-                    public void onRewardedVideoAdLoaded() {
-                    }
-
-                    @Override
-                    public void onRewardedVideoAdClosed() {
-                        Log.d("ABENK : ", "CLOSED");
-                        bsMob.loadReward();
-                    }
-
-                    @Override
-                    public void onRewardedVideoAdFailedToLoad(int error) {
-                        Log.d("ABENK : ", "FAILED");
-                        bsMob.loadReward();
-                    }
-
-                    @Override
-                    public void onRewardedVideoCompleted() {
-                        Log.d("ABENK : ", "COMPLETE");
-                    }
-                })
-                .show();
         bsMob = new BSMob.interstitial(this)
                 .setAdRequest(new AdRequest.Builder().build())
                 .setId("ca-app-pub-3940256099942544/1033173712")
@@ -99,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAdRequest(bsMobConsent.getAdRequest())
                 .setId("ca-app-pub-3940256099942544/6300978111")
                 .setLayout(linearLayout)
-                .setSize(BSMob.adaptiveSize(this))
+                .setSize(BSMob.adaptiveSize(this, 0))
                 .setListener(new BannerListener() {
                     @Override
                     public void onAdFailedToLoad(int error) {
