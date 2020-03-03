@@ -3,24 +3,24 @@
 3    package="com.benkkstudio.bsmob.test" >
 4
 5    <uses-sdk
-5-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger4812784438312341399.xml:5:5-74
+5-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6718797091662610076.xml:5:5-74
 6        android:minSdkVersion="15"
-6-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger4812784438312341399.xml:5:15-41
+6-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6718797091662610076.xml:5:15-41
 7        android:targetSdkVersion="29" />
-7-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger4812784438312341399.xml:5:42-71
+7-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6718797091662610076.xml:5:42-71
 8
 9    <instrumentation
-9-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger4812784438312341399.xml:11:5-15:76
+9-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6718797091662610076.xml:11:5-15:76
 10        android:name="androidx.test.runner.AndroidJUnitRunner"
-10-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger4812784438312341399.xml:11:22-76
+10-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6718797091662610076.xml:11:22-76
 11        android:functionalTest="false"
-11-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger4812784438312341399.xml:14:22-52
+11-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6718797091662610076.xml:14:22-52
 12        android:handleProfiling="false"
-12-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger4812784438312341399.xml:13:22-53
+12-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6718797091662610076.xml:13:22-53
 13        android:label="Tests for com.benkkstudio.bsmob.test"
-13-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger4812784438312341399.xml:15:22-74
+13-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6718797091662610076.xml:15:22-74
 14        android:targetPackage="com.benkkstudio.bsmob.test" />
-14-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger4812784438312341399.xml:12:22-72
+14-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6718797091662610076.xml:12:22-72
 15    <!-- Include required permissions for Google Mobile Ads to run -->
 16    <uses-permission android:name="android.permission.INTERNET" />
 16-->[com.google.android.gms:play-services-ads-lite:18.2.0] C:\Users\User PC\.gradle\caches\transforms-2\files-2.1\2a103d86c78676575dde2c15963da165\play-services-ads-lite-18.2.0\AndroidManifest.xml:23:5-67
@@ -36,14 +36,14 @@
 19-->[com.google.android.gms:play-services-measurement:17.0.0] C:\Users\User PC\.gradle\caches\transforms-2\files-2.1\9b59bf2dc7a257faf6c28c5ae50bacbc\play-services-measurement-17.0.0\AndroidManifest.xml:26:22-107
 20
 21    <application
-21-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger4812784438312341399.xml:7:5-9:19
+21-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6718797091662610076.xml:7:5-9:19
 22        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 22-->[androidx.core:core:1.0.1] C:\Users\User PC\.gradle\caches\transforms-2\files-2.1\72b2b92ec4ab73ff21fb9bc348de3b22\core-1.0.1\AndroidManifest.xml:22:18-86
 23        android:debuggable="true" >
-23-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger4812784438312341399.xml:7:18-43
+23-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6718797091662610076.xml:7:18-43
 24        <uses-library android:name="android.test.runner" />
-24-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger4812784438312341399.xml:8:9-60
-24-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger4812784438312341399.xml:8:23-57
+24-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6718797091662610076.xml:8:9-60
+24-->D:\KERJAAN\ANDROID STUDIO\BSMobSample\bsmob\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6718797091662610076.xml:8:23-57
 25        <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
 26        <activity
 26-->[com.google.android.gms:play-services-ads-lite:18.2.0] C:\Users\User PC\.gradle\caches\transforms-2\files-2.1\2a103d86c78676575dde2c15963da165\play-services-ads-lite-18.2.0\AndroidManifest.xml:29:9-33:64
@@ -114,11 +114,11 @@
 61-->[com.google.android.gms:play-services-measurement:17.0.0] C:\Users\User PC\.gradle\caches\transforms-2\files-2.1\9b59bf2dc7a257faf6c28c5ae50bacbc\play-services-measurement-17.0.0\AndroidManifest.xml:52:13-69
 62
 63        <meta-data
-63-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\User PC\.gradle\caches\transforms-2\files-2.1\79ae66510a6ece0c3d212a59fdded90a\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
+63-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\User PC\.gradle\caches\transforms-2\files-2.1\ad5cf160b1ce22d02d27076a306e3fc6\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
 64            android:name="com.google.android.gms.version"
-64-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\User PC\.gradle\caches\transforms-2\files-2.1\79ae66510a6ece0c3d212a59fdded90a\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
+64-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\User PC\.gradle\caches\transforms-2\files-2.1\ad5cf160b1ce22d02d27076a306e3fc6\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
 65            android:value="@integer/google_play_services_version" />
-65-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\User PC\.gradle\caches\transforms-2\files-2.1\79ae66510a6ece0c3d212a59fdded90a\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
+65-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\User PC\.gradle\caches\transforms-2\files-2.1\ad5cf160b1ce22d02d27076a306e3fc6\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
 66    </application>
 67
 68</manifest>

@@ -12,7 +12,9 @@ import androidx.annotation.NonNull;
 
 import com.benkkstudio.bsmob.Interface.BannerListener;
 import com.benkkstudio.bsmob.Interface.InterstitialListener;
+import com.benkkstudio.bsmob.Interface.InterstitialOnClosed;
 import com.benkkstudio.bsmob.Interface.RewardListener;
+import com.benkkstudio.bsmob.Interface.RewardOnClosed;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -26,23 +28,25 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 public class BSMob {
     public static final String DUMMY_BANNER = "ca-app-pub-3940256099942544/6300978111";
     public static final String DUMMY_INTERSTITIAL = "ca-app-pub-3940256099942544/1033173712";
-    public static final String DUMMY_REWARD = "ca-app-pub-3940256099942544/6300978111";
+    public static final String DUMMY_REWARD = "ca-app-pub-3940256099942544/5224354917";
 
     private Context context;
     private String interstitialId;
     private InterstitialListener interstitialListener;
-    private AdRequest adRequest;
+    private static AdRequest adRequest;
 
     private String bannerID;
     private BannerListener bannerListener;
     private AdSize adSize;
     private LinearLayout linearLayout;
 
-    private String rewardId;
+    private static String rewardId;
     private RewardListener rewardListener;
 
     private static InterstitialAd interstitialAd;
     private static RewardedVideoAd rewardedVideoAd;
+
+
     private BSMob(Context context,
                   String interstitialId,
                   InterstitialListener InterstitialListener,
@@ -50,7 +54,7 @@ public class BSMob {
         this.context = context;
         this.interstitialId = interstitialId;
         this.interstitialListener = InterstitialListener;
-        this.adRequest = adRequest;
+        BSMob.adRequest = adRequest;
         loadInterstitialInline();
     }
 
@@ -61,7 +65,7 @@ public class BSMob {
                   AdSize adSize,
                   LinearLayout linearLayout) {
         this.context = context;
-        this.adRequest = adRequest;
+        BSMob.adRequest = adRequest;
         this.bannerID = bannerID;
         this.bannerListener = bannerListener;
         this.adSize = adSize;
@@ -74,8 +78,8 @@ public class BSMob {
                   String rewardId,
                   RewardListener rewardListener) {
         this.context = context;
-        this.adRequest = adRequest;
-        this.rewardId = rewardId;
+        BSMob.adRequest = adRequest;
+        BSMob.rewardId = rewardId;
         this.rewardListener = rewardListener;
         loadRewardInline();
     }
@@ -106,7 +110,10 @@ public class BSMob {
         rewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
             @Override
             public void onRewardedVideoAdLoaded() {
-                rewardListener.onRewardedVideoAdLoaded(rewardedVideoAd);
+                if(rewardListener != null) {
+                    rewardListener.onRewardedVideoAdLoaded(rewardedVideoAd);
+                }
+                rewardedVideoAd.loadAd(rewardId, adRequest);
             }
 
             @Override
@@ -121,7 +128,10 @@ public class BSMob {
 
             @Override
             public void onRewardedVideoAdClosed() {
-                rewardListener.onRewardedVideoAdClosed(rewardedVideoAd);
+                if(rewardListener != null){
+                    rewardListener.onRewardedVideoAdClosed(rewardedVideoAd);
+                }
+                rewardedVideoAd.loadAd(rewardId, adRequest);
             }
 
             @Override
@@ -136,12 +146,17 @@ public class BSMob {
 
             @Override
             public void onRewardedVideoAdFailedToLoad(int i) {
-                rewardListener.onRewardedVideoAdFailedToLoad(i, rewardedVideoAd);
+                if(rewardListener != null) {
+                    rewardListener.onRewardedVideoAdFailedToLoad(i, rewardedVideoAd);
+                }
+                rewardedVideoAd.loadAd(rewardId, adRequest);
             }
 
             @Override
             public void onRewardedVideoCompleted() {
-                rewardListener.onRewardedVideoCompleted();
+                if(rewardListener != null) {
+                    rewardListener.onRewardedVideoCompleted();
+                }
             }
         });
     }
@@ -153,27 +168,113 @@ public class BSMob {
         interstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
-                interstitialListener.onAdClosed(interstitialAd);
+                if(interstitialListener != null){
+                    interstitialListener.onAdClosed(interstitialAd);
+                }
+                interstitialAd.loadAd(adRequest);
             }
 
             @Override
             public void onAdLoaded() {
-                interstitialListener.onAdLoaded(interstitialAd);
+                if(interstitialListener != null) {
+                    interstitialListener.onAdLoaded(interstitialAd);
+                }
             }
 
             @Override
             public void onAdFailedToLoad(int i) {
-                interstitialListener.onAdFailed(interstitialAd);
+                if(interstitialListener != null) {
+                    interstitialListener.onAdFailed(interstitialAd);
+                }
+                interstitialAd.loadAd(adRequest);
             }
         });
     }
 
-    public static InterstitialAd getInterstitial(){
-        return interstitialAd;
+    public static void showInterstitial(){
+        try {
+            if(interstitialAd.isLoaded()) {
+                interstitialAd.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public static RewardedVideoAd getReward(){
-        return rewardedVideoAd;
+    public static void showInterstitialWithListener(final InterstitialOnClosed interstitialOnClosed){
+        try {
+            if(interstitialAd.isLoaded()){
+                interstitialAd.show();
+                interstitialAd.setAdListener(new AdListener(){
+                    @Override
+                    public void onAdClosed() {
+                        interstitialOnClosed.onClosed();
+                        interstitialAd.loadAd(adRequest);
+                        super.onAdClosed();
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(int i) {
+                        interstitialAd.loadAd(adRequest);
+                        super.onAdFailedToLoad(i);
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void showRewardWithListener(final RewardOnClosed rewardOnClosed){
+        try {
+            rewardedVideoAd.show();
+            rewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+                @Override
+                public void onRewardedVideoAdLoaded() {
+
+                }
+
+                @Override
+                public void onRewardedVideoAdOpened() {
+
+                }
+
+                @Override
+                public void onRewardedVideoStarted() {
+
+                }
+
+                @Override
+                public void onRewardedVideoAdClosed() {
+                    rewardOnClosed.onClosed();
+                    rewardedVideoAd.loadAd(rewardId, adRequest);
+                }
+
+                @Override
+                public void onRewarded(RewardItem rewardItem) {
+
+                }
+
+                @Override
+                public void onRewardedVideoAdLeftApplication() {
+
+                }
+
+                @Override
+                public void onRewardedVideoAdFailedToLoad(int i) {
+                    rewardedVideoAd.loadAd(rewardId, adRequest);
+                }
+
+                @Override
+                public void onRewardedVideoCompleted() {
+                    rewardOnClosed.onComplete();
+                    rewardedVideoAd.loadAd(rewardId, adRequest);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static AdSize adaptiveSize(Activity activity, int min) {
@@ -215,7 +316,7 @@ public class BSMob {
         }
 
         @NonNull
-        public BSMob show() {
+        public BSMob load() {
             return new BSMob(context, interstitialId, InterstitialListener, adRequest);
         }
     }
@@ -297,7 +398,7 @@ public class BSMob {
 
 
         @NonNull
-        public BSMob show() {
+        public BSMob load() {
             return new BSMob(context, adRequest, rewardId, rewardListener);
         }
     }
